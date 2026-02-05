@@ -65,10 +65,12 @@ div {
 /* Text input styling */
 .stTextArea textarea,
 .stTextInput input {
+    background-color: #F0F0F0 !important;
     border: 2px solid #E0E0E0 !important;
     border-radius: 8px !important;
     font-family: 'Figtree', sans-serif !important;
     padding: 12px !important;
+    color: var(--moca-black) !important;
 }
 
 .stTextArea textarea:focus,

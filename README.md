@@ -1,4 +1,4 @@
-# 📱 Moca Instagram Post Generator
+# 📱 Social Moca Manager
 
 App Streamlit per generare testi Instagram con il tone of voice del brand Moca.
 

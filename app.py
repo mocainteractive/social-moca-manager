@@ -5,7 +5,7 @@ from openai import OpenAI
 
 # Page configuration
 st.set_page_config(
-    page_title="Moca Instagram Generator",
+    page_title="Social Moca Manager",
     page_icon="📱",
     layout="centered",
     initial_sidebar_state="expanded"
@@ -135,7 +135,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.title("📱 Instagram Post Generator")
+st.title("📱 Social Moca Manager")
 st.markdown("""
     <p style="font-size: 1.1em; color: #8A8A8A; margin-bottom: 30px;">
     Genera testi per i post Instagram mantenendo il tone of voice del brand Moca.
