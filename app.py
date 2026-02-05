@@ -135,9 +135,9 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.title("Social Moca Manager")
 st.markdown("""
-    <p style="font-size: 1.1em; color: #8A8A8A; margin-bottom: 30px;">
+    <h1 style="text-align: center; font-family: 'Figtree', sans-serif; font-weight: 700; margin-bottom: 10px;">Social Moca Manager</h1>
+    <p style="text-align: center; font-size: 1.1em; color: #8A8A8A; margin-bottom: 30px;">
     Genera testi per i post Instagram mantenendo il tone of voice del brand Moca.
     </p>
 """, unsafe_allow_html=True)
