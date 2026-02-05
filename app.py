@@ -206,9 +206,14 @@ if st.button("✨ Genera Post", use_container_width=True):
                     key="generated_output"
                 )
                 
-                # Copy button using JavaScript
+                # Copy button using base64 encoding to avoid character issues
+                import base64
+                encoded_text = base64.b64encode(generated_text.encode('utf-8')).decode('utf-8')
                 st.markdown(f'''
-                    <button onclick="navigator.clipboard.writeText(`{generated_text.replace('`', '\\`').replace('$', '\\$')}`).then(() => alert('Testo copiato!'))"
+                    <button onclick="navigator.clipboard.writeText(atob('{encoded_text}')).then(() => {{
+                        this.innerHTML = '✅ Copiato!';
+                        setTimeout(() => this.innerHTML = '📋 Copia tutto il testo', 2000);
+                    }})"
                         style="background-color: #E52217; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 600; margin-top: 10px;">
                         📋 Copia tutto il testo
                     </button>
