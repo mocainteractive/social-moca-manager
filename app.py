@@ -46,7 +46,7 @@ def get_sample_posts(posts, n=15):
             })
     return sample_posts
 
-def generate_post(client, user_request, all_posts):
+def generate_post(client, user_request, all_posts, previous_output=None):
     """Generate Instagram post using OpenAI with intelligent post matching"""
     
     # Build full context from ALL posts for the AI to analyze
@@ -54,6 +54,14 @@ def generate_post(client, user_request, all_posts):
         f"Post #{i+1}:\n{p['caption']}\nHashtags: {', '.join(['#' + h for h in p.get('hashtags', [])])}"
         for i, p in enumerate(all_posts) if p.get("caption")
     ])
+    
+    # Add previous output context if modifying
+    modification_context = ""
+    if previous_output:
+        modification_context = f"""\n\nTESTO PRECEDENTE DA MODIFICARE:
+{previous_output}
+
+L'utente vuole modificare questo testo. Applica le modifiche richieste mantenendo lo stile."""
     
     prompt = f"""Sei un copywriter per Moca Interactive.
 
@@ -81,6 +89,7 @@ REGOLE FERREE:
 ✅ RISCRIVI tutto con parole tue nello stile Moca
 
 Il post DEVE sembrare originale, scritto da zero, NON un riassunto dell'input.
+{modification_context}
 
 Scrivi SOLO il testo del post finale."""
 
@@ -179,11 +188,16 @@ if st.button("✨ Genera Post", use_container_width=True):
         with st.spinner("🔄 Generazione in corso..."):
             try:
                 client = OpenAI(api_key=api_key)
-                generated_text = generate_post(client, enhanced_request, posts)
+                # Check if this is a modification request
+                previous_output = st.session_state.get('last_generated_text', None)
+                generated_text = generate_post(client, enhanced_request, posts, previous_output)
                 
                 st.markdown("### 📄 Post Generato")
                 
-                # Single styled text area for display and copy
+                # Store in session state for future modifications
+                st.session_state['last_generated_text'] = generated_text
+                
+                # Single styled text area for display
                 st.text_area(
                     "Post generato",
                     generated_text,
@@ -191,7 +205,14 @@ if st.button("✨ Genera Post", use_container_width=True):
                     label_visibility="collapsed",
                     key="generated_output"
                 )
-                st.info("💡 Seleziona tutto il testo (Cmd+A) e copia (Cmd+C)")
+                
+                # Copy button using JavaScript
+                st.markdown(f'''
+                    <button onclick="navigator.clipboard.writeText(`{generated_text.replace('`', '\\`').replace('$', '\\$')}`).then(() => alert('Testo copiato!'))"
+                        style="background-color: #E52217; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 600; margin-top: 10px;">
+                        📋 Copia tutto il testo
+                    </button>
+                ''', unsafe_allow_html=True)
                 
             except Exception as e:
                 st.error(f"❌ Errore durante la generazione: {str(e)}")
