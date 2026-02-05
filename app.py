@@ -105,21 +105,6 @@ Scrivi SOLO il testo del post finale."""
     
     return response.choices[0].message.content
 
-# Sidebar configuration
-with st.sidebar:
-    st.markdown("""
-        <div style="text-align: center; padding: 20px 0;">
-            <img src="https://mocainteractive.com/assets/svg/logo.svg" style="max-width: 120px;">
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("### ℹ️ Info")
-    st.markdown("""
-        <div style="font-size: 0.85em; opacity: 0.8;">
-        Questa app analizza i post Instagram di Moca per generare nuovi testi con lo stesso tone of voice.
-        </div>
-    """, unsafe_allow_html=True)
-
 # Main content
 st.markdown("""
     <div style="text-align: center; margin-bottom: 30px;">
