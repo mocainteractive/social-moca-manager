@@ -78,6 +78,7 @@ REGOLE TASSATIVE:
 4. Mantieni la stessa struttura: hook, corpo, CTA (se presente nei riferimenti)
 5. Scrivi in italiano
 6. NON essere più formale o informale dei post di riferimento
+7. La LUNGHEZZA del post deve essere simile a quella dei post di riferimento (non più lungo, non più corto)
 
 RICHIESTA:
 {user_request}
@@ -184,25 +185,15 @@ if st.button("✨ Genera Post", use_container_width=True):
                 
                 st.markdown("### 📄 Post Generato")
                 
-                # Display generated text in styled container with copy button
-                st.markdown(f"""
-                    <div style="
-                        background-color: #FFE7E6;
-                        border-left: 4px solid #E52217;
-                        padding: 20px;
-                        border-radius: 0 8px 8px 0;
-                        margin: 20px 0;
-                        white-space: pre-wrap;
-                        font-family: 'Figtree', sans-serif;
-                        line-height: 1.6;
-                    ">
-                    {generated_text}
-                    </div>
-                """, unsafe_allow_html=True)
-                
-                # Store in session state for copy
-                st.session_state['generated_text'] = generated_text
-                st.text_area("Copia il testo:", generated_text, height=150, label_visibility="collapsed")
+                # Single styled text area for display and copy
+                st.text_area(
+                    "Post generato",
+                    generated_text,
+                    height=300,
+                    label_visibility="collapsed",
+                    key="generated_output"
+                )
+                st.info("💡 Seleziona tutto il testo (Cmd+A) e copia (Cmd+C)")
                 
             except Exception as e:
                 st.error(f"❌ Errore durante la generazione: {str(e)}")
