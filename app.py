@@ -113,21 +113,10 @@ with st.sidebar:
         </div>
     """, unsafe_allow_html=True)
     
-    st.markdown("### ⚙️ Configurazione")
-    
-    api_key = st.text_input(
-        "OpenAI API Key",
-        type="password",
-        placeholder="sk-...",
-        help="Inserisci la tua API key OpenAI"
-    )
-    
-    st.divider()
-    
     st.markdown("### ℹ️ Info")
     st.markdown("""
         <div style="font-size: 0.85em; opacity: 0.8;">
-        Questa app analizza i tuoi post Instagram precedenti per generare nuovi testi con lo stesso tone of voice.
+        Questa app analizza i post Instagram di Moca per generare nuovi testi con lo stesso tone of voice.
         </div>
     """, unsafe_allow_html=True)
 
@@ -171,9 +160,7 @@ with col2:
 st.markdown("<div style='height: 20px'></div>", unsafe_allow_html=True)
 
 if st.button("✨ Genera Post", use_container_width=True):
-    if not api_key:
-        st.error("⚠️ Inserisci la tua API key OpenAI nella sidebar")
-    elif not user_request:
+    if not user_request:
         st.error("⚠️ Descrivi il tipo di post che vuoi creare")
     elif not posts:
         st.error("⚠️ Nessun post di riferimento disponibile")
@@ -187,6 +174,8 @@ if st.button("✨ Genera Post", use_container_width=True):
         
         with st.spinner("🔄 Generazione in corso..."):
             try:
+                # Get API key from secrets
+                api_key = st.secrets["openai"]["api_key"]
                 client = OpenAI(api_key=api_key)
                 # Check if this is a modification request
                 previous_output = st.session_state.get('last_generated_text', None)
@@ -206,14 +195,19 @@ if st.button("✨ Genera Post", use_container_width=True):
                     key="generated_output"
                 )
                 
-                # Copy button using base64 encoding to avoid character issues
-                import base64
-                encoded_text = base64.b64encode(generated_text.encode('utf-8')).decode('utf-8')
+                # Copy button using hidden textarea for proper UTF-8/emoji handling
+                import html
+                escaped_text = html.escape(generated_text).replace('\n', '&#10;')
+                unique_id = f"copytext_{hash(generated_text) % 10000}"
                 st.markdown(f'''
-                    <button onclick="navigator.clipboard.writeText(atob('{encoded_text}')).then(() => {{
+                    <textarea id="{unique_id}" style="position: absolute; left: -9999px;">{escaped_text}</textarea>
+                    <button onclick="
+                        var textarea = document.getElementById('{unique_id}');
+                        textarea.select();
+                        document.execCommand('copy');
                         this.innerHTML = '✅ Copiato!';
                         setTimeout(() => this.innerHTML = '📋 Copia tutto il testo', 2000);
-                    }})"
+                    "
                         style="background-color: #E52217; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Figtree', sans-serif; font-weight: 600; margin-top: 10px;">
                         📋 Copia tutto il testo
                     </button>
