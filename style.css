@@ -10,7 +10,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap');
 
 /* Global Styles */
-html, body, [class*="css"] {
+html,
+body,
+[class*="css"] {
     font-family: 'Figtree', sans-serif !important;
 }
 
@@ -20,7 +22,12 @@ html, body, [class*="css"] {
 }
 
 /* Header styling */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Figtree', sans-serif !important;
     color: var(--moca-black) !important;
 }
@@ -30,12 +37,15 @@ h1 {
 }
 
 /* Text styling */
-p, span, label, div {
+p,
+span,
+label,
+div {
     color: var(--moca-black);
 }
 
 /* Primary button styling */
-.stButton > button {
+.stButton>button {
     background-color: var(--moca-red) !important;
     color: white !important;
     border: none !important;
@@ -46,21 +56,23 @@ p, span, label, div {
     transition: all 0.3s ease !important;
 }
 
-.stButton > button:hover {
+.stButton>button:hover {
     background-color: #C91E14 !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(229, 34, 23, 0.3) !important;
 }
 
 /* Text input styling */
-.stTextArea textarea, .stTextInput input {
+.stTextArea textarea,
+.stTextInput input {
     border: 2px solid #E0E0E0 !important;
     border-radius: 8px !important;
     font-family: 'Figtree', sans-serif !important;
     padding: 12px !important;
 }
 
-.stTextArea textarea:focus, .stTextInput input:focus {
+.stTextArea textarea:focus,
+.stTextInput input:focus {
     border-color: var(--moca-red) !important;
     box-shadow: 0 0 0 3px rgba(229, 34, 23, 0.1) !important;
 }
@@ -76,7 +88,7 @@ p, span, label, div {
 
 /* Sidebar styling */
 section[data-testid="stSidebar"] {
-    background-color: var(--moca-black) !important;
+    background-color: var(--moca-red-light) !important;
 }
 
 section[data-testid="stSidebar"] h1,
@@ -85,13 +97,13 @@ section[data-testid="stSidebar"] h3,
 section[data-testid="stSidebar"] p,
 section[data-testid="stSidebar"] span,
 section[data-testid="stSidebar"] label {
-    color: white !important;
+    color: var(--moca-black) !important;
 }
 
 section[data-testid="stSidebar"] .stTextInput input {
-    background-color: rgba(255, 255, 255, 0.1) !important;
-    color: white !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background-color: white !important;
+    color: var(--moca-black) !important;
+    border: 2px solid #E0E0E0 !important;
 }
 
 /* Logo container */
@@ -126,7 +138,7 @@ section[data-testid="stSidebar"] .stTextInput input {
 }
 
 /* Spinner */
-.stSpinner > div {
+.stSpinner>div {
     border-top-color: var(--moca-red) !important;
 }
 

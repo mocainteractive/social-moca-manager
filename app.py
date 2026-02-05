@@ -106,7 +106,7 @@ Genera SOLO il testo del post, nient'altro."""
 with st.sidebar:
     st.markdown("""
         <div style="text-align: center; padding: 20px 0;">
-            <img src="https://mocainteractive.com/assets/svg/logo.svg" style="max-width: 120px; filter: brightness(0) invert(1);">
+            <img src="https://mocainteractive.com/assets/svg/logo.svg" style="max-width: 120px;">
         </div>
     """, unsafe_allow_html=True)
     
