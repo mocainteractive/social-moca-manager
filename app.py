@@ -6,7 +6,7 @@ from openai import OpenAI
 # Page configuration
 st.set_page_config(
     page_title="Social Moca Manager",
-    page_icon="📱",
+    page_icon="🔴",
     layout="centered",
     initial_sidebar_state="expanded"
 )
@@ -135,7 +135,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-st.title("📱 Social Moca Manager")
+st.title("Social Moca Manager")
 st.markdown("""
     <p style="font-size: 1.1em; color: #8A8A8A; margin-bottom: 30px;">
     Genera testi per i post Instagram mantenendo il tone of voice del brand Moca.
@@ -144,10 +144,6 @@ st.markdown("""
 
 # Load posts
 posts = load_posts()
-if posts:
-    st.success(f"✅ Caricati {len(posts)} post di riferimento")
-else:
-    st.warning("⚠️ Nessun post di riferimento trovato. Assicurati che il file `posts_data.json` sia presente.")
 
 st.divider()
 
@@ -156,7 +152,7 @@ st.markdown("### 📝 Che tipo di post vuoi creare?")
 
 user_request = st.text_area(
     label="Descrivi il contenuto del post",
-    placeholder="Es: Post per annunciare un nuovo servizio di consulenza SEO, evidenziando i vantaggi per le PMI italiane...",
+    placeholder="Descrivimi che testo vuoi creare",
     height=120,
     label_visibility="collapsed"
 )
