@@ -46,52 +46,45 @@ def get_sample_posts(posts, n=15):
             })
     return sample_posts
 
-def generate_post(client, user_request, sample_posts):
-    """Generate Instagram post using OpenAI"""
+def generate_post(client, user_request, all_posts):
+    """Generate Instagram post using OpenAI with intelligent post matching"""
     
-    # Build context from sample posts
+    # Build full context from ALL posts for the AI to analyze
     posts_context = "\n\n---\n\n".join([
-        f"Post ({p['type']}):\n{p['caption']}"
-        for p in sample_posts
+        f"Post #{i+1}:\n{p['caption']}\nHashtags: {', '.join(['#' + h for h in p.get('hashtags', [])])}"
+        for i, p in enumerate(all_posts) if p.get("caption")
     ])
     
-    # Analyze common hashtags
-    all_hashtags = []
-    for p in sample_posts:
-        all_hashtags.extend(p.get("hashtags", []))
-    common_hashtags = list(set(all_hashtags))[:10]
-    
-    prompt = f"""Sei un copywriter per Moca Interactive, un'agenzia di digital marketing con sede a Treviso, Italia.
+    prompt = f"""Sei un copywriter per Moca Interactive. Il tuo compito è scrivere un post Instagram basandoti sui post esistenti del brand.
 
-Devi scrivere un post Instagram che rispetti ESATTAMENTE lo stile dei post precedenti forniti come riferimento. NON essere creativo, replica fedelmente lo stile.
-
-POST DI RIFERIMENTO DA IMITARE:
+ARCHIVIO COMPLETO DEI POST MOCA:
 {posts_context}
 
-HASHTAG DA USARE (usa SOLO questi, non inventarne altri):
-{', '.join(['#' + h for h in common_hashtags])}
-
-REGOLE TASSATIVE:
-1. Usa SOLO gli hashtag elencati sopra, NON aggiungerne di nuovi
-2. Replica esattamente lo stile di scrittura dei post di riferimento
-3. Usa le emoji con la stessa frequenza e stile dei post di riferimento
-4. Mantieni la stessa struttura: hook, corpo, CTA (se presente nei riferimenti)
-5. Scrivi in italiano
-6. NON essere più formale o informale dei post di riferimento
-7. La LUNGHEZZA del post deve essere simile a quella dei post di riferimento (non più lungo, non più corto)
-
-RICHIESTA:
+RICHIESTA DELL'UTENTE:
 {user_request}
 
-Genera SOLO il testo del post, nient'altro."""
+ISTRUZIONI:
+1. ANALIZZA la richiesta dell'utente e identifica il TIPO di post richiesto (es: benvenuto nuovo membro, annuncio servizio, evento, tips, ecc.)
+2. CERCA nell'archivio i post simili per tipologia alla richiesta
+3. USA la STRUTTURA di quei post come modello (lunghezza, tono, uso emoji, formattazione)
+4. USA SOLO gli hashtag che trovi in quei post simili, NON inventarne di nuovi
+5. REPLICA fedelmente lo stile, NON essere più creativo o diverso dai post esistenti
+
+ESEMPIO DI RAGIONAMENTO:
+- Se l'utente chiede un post di benvenuto → cerca i post che parlano di "benvenuto", "nuovo arrivo", "team" e usa quella struttura e quegli hashtag
+- Se chiede un post su un servizio → cerca i post che parlano di servizi e usa quella struttura
+- Se chiede un post motivazionale → cerca i post con quel tono e usa quella struttura
+
+GENERA il post seguendo ESATTAMENTE lo stile dei post simili trovati nell'archivio.
+Scrivi SOLO il testo del post finale, nient'altro."""
 
     response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
-            {"role": "system", "content": "Sei un esperto copywriter specializzato in social media marketing per agenzie digitali italiane."},
+            {"role": "system", "content": "Sei un copywriter che replica esattamente lo stile dei post esistenti. Non sei creativo, sei un imitatore fedele."},
             {"role": "user", "content": prompt}
         ],
-        temperature=0.7,
+        temperature=0.5,
         max_tokens=1000
     )
     
@@ -180,8 +173,7 @@ if st.button("✨ Genera Post", use_container_width=True):
         with st.spinner("🔄 Generazione in corso..."):
             try:
                 client = OpenAI(api_key=api_key)
-                sample_posts = get_sample_posts(posts, n=15)
-                generated_text = generate_post(client, enhanced_request, sample_posts)
+                generated_text = generate_post(client, enhanced_request, posts)
                 
                 st.markdown("### 📄 Post Generato")
                 
