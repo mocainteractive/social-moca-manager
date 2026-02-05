@@ -55,29 +55,34 @@ def generate_post(client, user_request, all_posts):
         for i, p in enumerate(all_posts) if p.get("caption")
     ])
     
-    prompt = f"""Sei un copywriter per Moca Interactive. Il tuo compito è scrivere un post Instagram basandoti sui post esistenti del brand.
+    prompt = f"""Sei un copywriter per Moca Interactive.
 
-ARCHIVIO COMPLETO DEI POST MOCA:
+ESEMPI DI POST REALI DI MOCA (studia lo stile):
 {posts_context}
 
-INPUT DELL'UTENTE:
+INPUT DA ELABORARE:
 {user_request}
 
-ISTRUZIONI:
-1. ANALIZZA l'input dell'utente: potrebbe contenere sia il tipo di post richiesto che informazioni specifiche (nomi, ruoli, dettagli, argomenti)
-2. ESTRAI le informazioni chiave dall'input (es: nome persona, ruolo, argomento, dettagli specifici)
-3. CERCA nell'archivio i post simili per tipologia e usa quella STRUTTURA come modello
-4. RIELABORA le informazioni dell'utente nello stile Moca - NON copiare letteralmente il testo dell'input
-5. USA SOLO gli hashtag che trovi in quei post simili, NON inventarne di nuovi
-6. Mantieni lunghezza, tono e formattazione simili ai post di riferimento
+IL TUO COMPITO:
+1. Identifica il TIPO di post richiesto cercando esempi simili sopra
+2. Dall'input, ESTRAI solo 2-3 fatti chiave sulla persona/argomento (nome, ruolo, 1-2 caratteristiche uniche)
+3. RISCRIVI completamente quei fatti nello stile Moca - NON copiare frasi dall'input!
+4. Usa SOLO hashtag che vedi negli esempi simili sopra
 
-IMPORTANTE:
-- Le informazioni nell'input sono MATERIA PRIMA da rielaborare, non testo da copiare
-- Scrivi il post come se fossi tu a conoscere quelle informazioni, non come se le stessi riportando
-- Il post finale deve sembrare scritto da zero, non una rielaborazione ovvia dell'input
+REGOLE FERREE:
+❌ NON copiare MAI frasi intere dall'input dell'utente
+❌ NON usare le stesse parole/espressioni dell'utente
+❌ NON inventare hashtag - usa SOLO quelli degli esempi simili
+❌ NON scrivere post più lunghi di quelli negli esempi
 
-GENERA il post seguendo lo stile dei post simili trovati nell'archivio.
-Scrivi SOLO il testo del post finale, nient'altro."""
+✅ SINTETIZZA le info in poche righe come fanno i post di esempio
+✅ USA lo stesso tono e struttura degli esempi simili
+✅ SELEZIONA solo i dettagli più interessanti/unici da menzionare
+✅ RISCRIVI tutto con parole tue nello stile Moca
+
+Il post DEVE sembrare originale, scritto da zero, NON un riassunto dell'input.
+
+Scrivi SOLO il testo del post finale."""
 
     response = client.chat.completions.create(
         model="gpt-4o",
