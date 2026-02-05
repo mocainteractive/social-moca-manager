@@ -88,7 +88,7 @@ div {
 
 /* Sidebar styling */
 section[data-testid="stSidebar"] {
-    background-color: var(--moca-red-light) !important;
+    background-color: #F0F0F0 !important;
 }
 
 section[data-testid="stSidebar"] h1,
