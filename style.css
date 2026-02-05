@@ -1,0 +1,142 @@
+/* Moca Brand Colors */
+:root {
+    --moca-red: #E52217;
+    --moca-red-light: #FFE7E6;
+    --moca-black: #191919;
+    --moca-gray: #8A8A8A;
+}
+
+/* Import Figtree Font */
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&display=swap');
+
+/* Global Styles */
+html, body, [class*="css"] {
+    font-family: 'Figtree', sans-serif !important;
+}
+
+/* Main container */
+.stApp {
+    background-color: #FFFFFF;
+}
+
+/* Header styling */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Figtree', sans-serif !important;
+    color: var(--moca-black) !important;
+}
+
+h1 {
+    font-weight: 700 !important;
+}
+
+/* Text styling */
+p, span, label, div {
+    color: var(--moca-black);
+}
+
+/* Primary button styling */
+.stButton > button {
+    background-color: var(--moca-red) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 2rem !important;
+    font-family: 'Figtree', sans-serif !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.stButton > button:hover {
+    background-color: #C91E14 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(229, 34, 23, 0.3) !important;
+}
+
+/* Text input styling */
+.stTextArea textarea, .stTextInput input {
+    border: 2px solid #E0E0E0 !important;
+    border-radius: 8px !important;
+    font-family: 'Figtree', sans-serif !important;
+    padding: 12px !important;
+}
+
+.stTextArea textarea:focus, .stTextInput input:focus {
+    border-color: var(--moca-red) !important;
+    box-shadow: 0 0 0 3px rgba(229, 34, 23, 0.1) !important;
+}
+
+/* Generated text container */
+.generated-text {
+    background-color: var(--moca-red-light);
+    border-left: 4px solid var(--moca-red);
+    padding: 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+}
+
+/* Sidebar styling */
+section[data-testid="stSidebar"] {
+    background-color: var(--moca-black) !important;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] label {
+    color: white !important;
+}
+
+section[data-testid="stSidebar"] .stTextInput input {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Logo container */
+.logo-container {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.logo-container img {
+    max-width: 150px;
+}
+
+/* Info box styling */
+.info-box {
+    background-color: var(--moca-red-light);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+}
+
+/* Copy button */
+.copy-btn {
+    background-color: transparent !important;
+    border: 2px solid var(--moca-red) !important;
+    color: var(--moca-red) !important;
+}
+
+.copy-btn:hover {
+    background-color: var(--moca-red) !important;
+    color: white !important;
+}
+
+/* Spinner */
+.stSpinner > div {
+    border-top-color: var(--moca-red) !important;
+}
+
+/* Divider */
+hr {
+    border-color: #E0E0E0 !important;
+}
+
+/* Success message */
+.stSuccess {
+    background-color: var(--moca-red-light) !important;
+    color: var(--moca-black) !important;
+}
