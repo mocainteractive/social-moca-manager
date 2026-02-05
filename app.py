@@ -61,32 +61,26 @@ def generate_post(client, user_request, sample_posts):
         all_hashtags.extend(p.get("hashtags", []))
     common_hashtags = list(set(all_hashtags))[:10]
     
-    prompt = f"""Sei un copywriter esperto per Moca Interactive, un'agenzia di digital marketing con sede a Treviso, Italia.
+    prompt = f"""Sei un copywriter per Moca Interactive, un'agenzia di digital marketing con sede a Treviso, Italia.
 
-Il tuo compito è scrivere un post Instagram che rispetti perfettamente il tone of voice del brand, analizzando i post precedenti forniti come riferimento.
+Devi scrivere un post Instagram che rispetti ESATTAMENTE lo stile dei post precedenti forniti come riferimento. NON essere creativo, replica fedelmente lo stile.
 
-ANALISI DEI POST PRECEDENTI:
+POST DI RIFERIMENTO DA IMITARE:
 {posts_context}
 
-HASHTAG RICORRENTI DEL BRAND:
+HASHTAG DA USARE (usa SOLO questi, non inventarne altri):
 {', '.join(['#' + h for h in common_hashtags])}
 
-ELEMENTI CHIAVE DA REPLICARE:
-1. Tono: professionale ma accessibile, empatico, orientato al valore
-2. Struttura tipica: hook iniziale con emoji, corpo informativo, call-to-action finale, hashtag
-3. Uso di emoji: moderato e professionale (come nei post di riferimento)
-4. Lingua: italiano
-5. Formattazione: uso di line breaks per leggibilità, elenchi puntati quando appropriato
+REGOLE TASSATIVE:
+1. Usa SOLO gli hashtag elencati sopra, NON aggiungerne di nuovi
+2. Replica esattamente lo stile di scrittura dei post di riferimento
+3. Usa le emoji con la stessa frequenza e stile dei post di riferimento
+4. Mantieni la stessa struttura: hook, corpo, CTA (se presente nei riferimenti)
+5. Scrivi in italiano
+6. NON essere più formale o informale dei post di riferimento
 
-RICHIESTA DELL'UTENTE:
+RICHIESTA:
 {user_request}
-
-Scrivi un nuovo post Instagram che:
-- Rispetti il tone of voice dei post di riferimento
-- Sia coerente con l'identità del brand Moca
-- Includa hashtag pertinenti (usa quelli ricorrenti se appropriati + altri rilevanti)
-- Abbia una lunghezza simile ai post di riferimento
-- Sia pronto per essere pubblicato
 
 Genera SOLO il testo del post, nient'altro."""
 
@@ -190,7 +184,7 @@ if st.button("✨ Genera Post", use_container_width=True):
                 
                 st.markdown("### 📄 Post Generato")
                 
-                # Display generated text in styled container
+                # Display generated text in styled container with copy button
                 st.markdown(f"""
                     <div style="
                         background-color: #FFE7E6;
@@ -206,9 +200,9 @@ if st.button("✨ Genera Post", use_container_width=True):
                     </div>
                 """, unsafe_allow_html=True)
                 
-                # Copy functionality
-                st.code(generated_text, language=None)
-                st.info("💡 Clicca sull'icona 📋 in alto a destra del box sopra per copiare il testo")
+                # Store in session state for copy
+                st.session_state['generated_text'] = generated_text
+                st.text_area("Copia il testo:", generated_text, height=150, label_visibility="collapsed")
                 
             except Exception as e:
                 st.error(f"❌ Errore durante la generazione: {str(e)}")
