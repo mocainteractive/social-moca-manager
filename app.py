@@ -165,7 +165,7 @@ if st.button("✨ Genera Post", use_container_width=True):
                 elif "openai" in st.secrets and "api_key" in st.secrets["openai"]:
                     api_key = st.secrets["openai"]["api_key"]
                 else:
-                    st.error("🔑 API Key non trovata nei secrets. Controlla .streamlit/secrets.toml")
+                    st.error("🔑 API Key non trovata nei secrets. Configurala nelle impostazioni di Streamlit Cloud (App Settings -> Secrets).")
                     st.stop()
                     
                 client = OpenAI(api_key=api_key)
