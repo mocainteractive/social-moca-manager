@@ -159,8 +159,15 @@ if st.button("✨ Genera Post", use_container_width=True):
         
         with st.spinner("🔄 Generazione in corso..."):
             try:
-                # Get API key from secrets
-                api_key = st.secrets["openai"]["api_key"]
+                # Get API key from secrets with fallback logic
+                if "OPENAI_API_KEY" in st.secrets:
+                    api_key = st.secrets["OPENAI_API_KEY"]
+                elif "openai" in st.secrets and "api_key" in st.secrets["openai"]:
+                    api_key = st.secrets["openai"]["api_key"]
+                else:
+                    st.error("🔑 API Key non trovata nei secrets. Controlla .streamlit/secrets.toml")
+                    st.stop()
+                    
                 client = OpenAI(api_key=api_key)
                 # Check if this is a modification request
                 previous_output = st.session_state.get('last_generated_text', None)
