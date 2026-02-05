@@ -60,22 +60,23 @@ def generate_post(client, user_request, all_posts):
 ARCHIVIO COMPLETO DEI POST MOCA:
 {posts_context}
 
-RICHIESTA DELL'UTENTE:
+INPUT DELL'UTENTE:
 {user_request}
 
 ISTRUZIONI:
-1. ANALIZZA la richiesta dell'utente e identifica il TIPO di post richiesto (es: benvenuto nuovo membro, annuncio servizio, evento, tips, ecc.)
-2. CERCA nell'archivio i post simili per tipologia alla richiesta
-3. USA la STRUTTURA di quei post come modello (lunghezza, tono, uso emoji, formattazione)
-4. USA SOLO gli hashtag che trovi in quei post simili, NON inventarne di nuovi
-5. REPLICA fedelmente lo stile, NON essere più creativo o diverso dai post esistenti
+1. ANALIZZA l'input dell'utente: potrebbe contenere sia il tipo di post richiesto che informazioni specifiche (nomi, ruoli, dettagli, argomenti)
+2. ESTRAI le informazioni chiave dall'input (es: nome persona, ruolo, argomento, dettagli specifici)
+3. CERCA nell'archivio i post simili per tipologia e usa quella STRUTTURA come modello
+4. RIELABORA le informazioni dell'utente nello stile Moca - NON copiare letteralmente il testo dell'input
+5. USA SOLO gli hashtag che trovi in quei post simili, NON inventarne di nuovi
+6. Mantieni lunghezza, tono e formattazione simili ai post di riferimento
 
-ESEMPIO DI RAGIONAMENTO:
-- Se l'utente chiede un post di benvenuto → cerca i post che parlano di "benvenuto", "nuovo arrivo", "team" e usa quella struttura e quegli hashtag
-- Se chiede un post su un servizio → cerca i post che parlano di servizi e usa quella struttura
-- Se chiede un post motivazionale → cerca i post con quel tono e usa quella struttura
+IMPORTANTE:
+- Le informazioni nell'input sono MATERIA PRIMA da rielaborare, non testo da copiare
+- Scrivi il post come se fossi tu a conoscere quelle informazioni, non come se le stessi riportando
+- Il post finale deve sembrare scritto da zero, non una rielaborazione ovvia dell'input
 
-GENERA il post seguendo ESATTAMENTE lo stile dei post simili trovati nell'archivio.
+GENERA il post seguendo lo stile dei post simili trovati nell'archivio.
 Scrivi SOLO il testo del post finale, nient'altro."""
 
     response = client.chat.completions.create(
